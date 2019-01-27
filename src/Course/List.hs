@@ -209,8 +209,9 @@ flatMap ::
   (a -> List b)
   -> List a
   -> List b
-flatMap =
-  error "todo: Course.List#flatMap"
+-- flatMap f xs = flatten (map f xs)
+-- flatMap f xs = (flatten . map f) xs
+flatMap f = flatten . map f
 
 -- | Flatten a list of lists to a list (again).
 -- HOWEVER, this time use the /flatMap/ function that you just wrote.
@@ -219,8 +220,8 @@ flatMap =
 flattenAgain ::
   List (List a)
   -> List a
-flattenAgain =
-  error "todo: Course.List#flattenAgain"
+-- flattenAgain = foldRight (\xs xss -> flatMap (\_ -> xs) xs) Nil
+flattenAgain = flatMap id
 
 -- | Convert a list of optional values to an optional list of values.
 --
