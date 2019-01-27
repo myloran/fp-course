@@ -75,8 +75,9 @@ headOr ::
   a
   -> List a
   -> a
-headOr =
-  error "todo: Course.List#headOr"
+-- headOr a xs = foldRight (\x _ -> x) a xs
+-- headOr a xs = foldRight const a xs
+headOr = foldRight const
 
 -- | The product of the elements of a list.
 --
@@ -91,8 +92,7 @@ headOr =
 product ::
   List Int
   -> Int
-product =
-  error "todo: Course.List#product"
+product = foldRight (*) 1
 
 -- | Sum the elements of the list.
 --
@@ -106,8 +106,7 @@ product =
 sum ::
   List Int
   -> Int
-sum =
-  error "todo: Course.List#sum"
+sum = foldRight (+) 0
 
 -- | Return the length of the list.
 --
@@ -118,8 +117,9 @@ sum =
 length ::
   List a
   -> Int
-length =
-  error "todo: Course.List#length"
+-- length = foldRight (\_ b -> 1 + b) 0
+-- length = foldRight (\_ -> (1 +)) 0
+length = foldRight (const (1 +)) 0
 
 -- | Map the given function on each element of the list.
 --
@@ -133,8 +133,9 @@ map ::
   (a -> b)
   -> List a
   -> List b
-map =
-  error "todo: Course.List#map"
+-- map f = foldRight (\a bs -> f a :. bs) Nil
+-- map f = foldRight (\a -> (f a :.)) Nil
+map f = foldRight ((:.) . f) Nil
 
 -- | Return elements satisfying the given predicate.
 --
