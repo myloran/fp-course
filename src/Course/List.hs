@@ -172,8 +172,9 @@ identity = foldRight (:.) Nil
   List a
   -> List a
   -> List a
-(++) =
-  error "todo: Course.List#(++)"
+-- (++) xs ys = foldRight (:.) ys xs
+(++) = flip (foldRight (:.))
+
 
 infixr 5 ++
 
@@ -190,8 +191,9 @@ infixr 5 ++
 flatten ::
   List (List a)
   -> List a
-flatten =
-  error "todo: Course.List#flatten"
+-- flatten = foldRight (\xs xss -> foldRight (:.) xss xs ) Nil
+-- flatten = foldRight (flip (foldRight (:.))) Nil
+flatten = foldRight (++) Nil
 
 -- | Map a function then flatten to a list.
 --
