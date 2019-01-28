@@ -203,7 +203,8 @@ lift3 ::
   -> f b
   -> f c
   -> f d
-lift3 f fa fb = (f <$> fa <*> fb <*>)
+-- lift3 f fa fb = (f <$> fa <*> fb <*>)
+lift3 f fa fb = (lift2 f fa fb <*>)
 
 -- | Apply a quaternary function in the environment.
 -- /can be written using `lift3` and `(<*>)`./
@@ -243,8 +244,7 @@ lift0 ::
   Applicative f =>
   a
   -> f a
-lift0 =
-  error "todo: Course.Applicative#lift0"
+lift0 a = pure a
 
 -- | Apply a unary function in the environment.
 -- /can be written using `lift0` and `(<*>)`./
@@ -262,8 +262,8 @@ lift1 ::
   (a -> b)
   -> f a
   -> f b
-lift1 =
-  error "todo: Course.Applicative#lift1"
+-- lift1 f fa = f <$> fa
+lift1 f = (f <$>)
 
 -- | Apply, discarding the value of the first argument.
 -- Pronounced, right apply.
