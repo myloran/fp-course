@@ -132,15 +132,14 @@ instance Applicative Optional where
 instance Applicative ((->) t) where
   pure ::
     a
-    -> ((->) t a)
-  pure =
-    error "todo: Course.Applicative pure#((->) t)"
+    -> (t -> a)
+  pure = const
+    
   (<*>) ::
-    ((->) t (a -> b))
-    -> ((->) t a)
-    -> ((->) t b)
-  (<*>) =
-    error "todo: Course.Apply (<*>)#instance ((->) t)"
+    (t -> (a -> b))
+    -> (t -> a)
+    -> (t -> b)
+  (<*>) tab ta t = tab t (ta t)
 
 
 -- | Apply a binary function in the environment.
