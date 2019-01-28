@@ -153,6 +153,13 @@ filter ::
   -> List a
 filter f = foldRight (\a bs -> if f a then a :. bs else bs) Nil
 
+-- 1 :. 2 :. 3 :. 4 :. 5 :. Nil
+-- 2 :.  3 :. 4 :. 5 :. Nil
+-- 2 :.  4 :. 5 :. Nil
+-- 2 :. 4 :.  Nil
+-- 2 :. 4 :. Nil
+--  f 1 (f 2 ( f 3 (f 4 (f 5 Nil))))
+
 identity :: List a -> List a
 identity = foldRight (:.) Nil
 
@@ -220,7 +227,6 @@ flatMap f = flatten . map f
 flattenAgain ::
   List (List a)
   -> List a
--- flattenAgain = foldRight (\xs xss -> flatMap (\_ -> xs) xs) Nil
 flattenAgain = flatMap id
 
 -- | Convert a list of optional values to an optional list of values.
@@ -248,8 +254,7 @@ flattenAgain = flatMap id
 seqOptional ::
   List (Optional a)
   -> Optional (List a)
-seqOptional =
-  error "todo: Course.List#seqOptional"
+seqOptional = foldRight (twiceOptional (:.)) (Full Nil)
 
 -- | Find the first element in the list matching the predicate.
 --
@@ -271,8 +276,7 @@ find ::
   (a -> Bool)
   -> List a
   -> Optional a
-find =
-  error "todo: Course.List#find"
+find p = foldRight (\a o -> if p a then Full a else o) Empty 
 
 -- | Determine if the length of the given list is greater than 4.
 --
@@ -290,8 +294,7 @@ find =
 lengthGT4 ::
   List a
   -> Bool
-lengthGT4 =
-  error "todo: Course.List#lengthGT4"
+lengthGT4 a = if length a > 4 then True else False
 
 -- | Reverse a list.
 --
@@ -307,8 +310,8 @@ lengthGT4 =
 reverse ::
   List a
   -> List a
-reverse =
-  error "todo: Course.List#reverse"
+-- reverse = foldLeft (\a as -> as :. a) Nil
+reverse = foldLeft (flip (:.)) Nil
 
 -- | Produce an infinite `List` that seeds with the given value at its head,
 -- then runs the given function for subsequent elements
@@ -336,8 +339,7 @@ produce f x = x :. produce f (f x)
 notReverse ::
   List a
   -> List a
-notReverse =
-  error "todo: Is it even possible?"
+notReverse = reverse  
 
 ---- End of list exercises
 
