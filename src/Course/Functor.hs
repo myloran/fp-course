@@ -41,8 +41,11 @@ instance Functor ExactlyOne where
     (a -> b)
     -> ExactlyOne a
     -> ExactlyOne b
-  (<$>) =
-    error "todo: Course.Functor (<$>)#instance ExactlyOne"
+  -- (<$>) f eoa = 
+  --   let a = runExactlyOne eoa
+  --       b = f a
+  --   in ExactlyOne b
+  (<$>) f = ExactlyOne . f . runExactlyOne
 
 -- | Maps a function on the List functor.
 --
