@@ -86,6 +86,7 @@ instance Functor ((->) t) where
     -> (t -> b)
   -- (<$>) f g = \t -> f (g t)
   -- (<$>) f g = \t -> (f . g) t
+  -- (<$>) f g t = f (g t)
   -- (<$>) f g = f . g
   -- (<$>) f g = (.) f g
   (<$>) = (.)
