@@ -288,8 +288,9 @@ lift1 f = (f <$>)
   f a
   -> f b
   -> f b
-(*>) =
-  error "todo: Course.Applicative#(*>)"
+-- (*>) fa fb = lift2 (\_ b -> b) fa fb
+-- (*>) fa fb = lift2 (flip const) fa fb
+(*>) = lift2 (flip const)
 
 -- | Apply, discarding the value of the second argument.
 -- Pronounced, left apply.
@@ -314,8 +315,8 @@ lift1 f = (f <$>)
   f b
   -> f a
   -> f b
-(<*) =
-  error "todo: Course.Applicative#(<*)"
+-- (<*) fb fa = lift2 (const) fb fa 
+(<*) = lift2 const
 
 -- | Sequences a list of structures to a structure of list.
 --
